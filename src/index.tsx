@@ -1,3 +1,4 @@
+import gql from "graphql-tag";
 import { hot } from "react-hot-loader";
 import { ThemeProvider } from "styled-components";
 
@@ -21,6 +22,7 @@ import CheckoutApp from "./checkout";
 import { CheckoutContext } from "./checkout/context";
 import CheckoutProvider from "./checkout/provider";
 import { baseUrl as checkoutBaseUrl } from "./checkout/routes";
+import { PRODUCTS_PER_PAGE } from "./core/config";
 import { history } from "./history";
 
 import {
@@ -67,10 +69,27 @@ const startApp = async () => {
     storage: window.localStorage,
   });
 
+  const typeDefs = gql`
+    extend type Query {
+      productsPerPage: Int!
+    }
+  `;
+
   const apolloClient = new ApolloClient({
     cache,
     link,
+    resolvers: {},
+    typeDefs,
   });
+
+  cache.writeData({
+    data: {
+      productsPerPage: PRODUCTS_PER_PAGE,
+    },
+  });
+
+  // tslint:disable-next-line:no-console
+  console.log("cache", cache);
 
   const notificationOptions = {
     position: positions.BOTTOM_RIGHT,

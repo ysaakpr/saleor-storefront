@@ -3,6 +3,16 @@ import gql from "graphql-tag";
 import { TypedQuery } from "../../core/queries";
 import { basicProductFragment } from "../Product/queries";
 import { Category, CategoryVariables } from "./types/Category";
+import { ProductsNumber } from "./types/ProductsNumber";
+
+export const loadedProductsNumber = gql`
+  query ProductsNumber {
+    productsPerPage @client
+  }
+`;
+export const LocalProductsNumberQuery = TypedQuery<ProductsNumber, {}>(
+  loadedProductsNumber
+);
 
 export const categoryProductsQuery = gql`
   ${basicProductFragment}
