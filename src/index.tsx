@@ -82,15 +82,6 @@ const startApp = async () => {
     typeDefs,
   });
 
-  cache.writeData({
-    data: {
-      productsPerPage: PRODUCTS_PER_PAGE,
-    },
-  });
-
-  // tslint:disable-next-line:no-console
-  console.log("cache", cache);
-
   const notificationOptions = {
     position: positions.BOTTOM_RIGHT,
     timeout: 2500,
@@ -198,3 +189,9 @@ if ("serviceWorker" in navigator) {
 }
 
 startApp();
+
+cache.writeData({
+  data: {
+    productsPerPage: PRODUCTS_PER_PAGE,
+  },
+});
